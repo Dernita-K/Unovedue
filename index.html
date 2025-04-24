@@ -9,77 +9,123 @@
     body {
       margin: 0;
       font-family: 'Playfair Display', serif;
-      background: #f3f7f0;
-      color: #333;
+      background-color: #f4fdf4;
+      color: #2d2d2d;
     }
     header {
-      background: #c8e6c9;
-      padding: 1rem 2rem;
+      background-color: #b7e4c7;
+      padding: 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 2px solid #a5d6a7;
+      position: relative;
     }
-    .logo {
+    header h1 {
+      margin: 0;
       font-size: 2rem;
-      font-weight: bold;
     }
-    .menu {
+    .menu-button {
       font-size: 1.5rem;
       cursor: pointer;
+      background: none;
+      border: none;
     }
-    .search-bar {
+    .menu {
+      position: absolute;
+      top: 70px;
+      right: 20px;
+      background: #ffffff;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 15px;
+      display: none;
+      flex-direction: column;
+      width: 200px;
+    }
+    .menu a {
+      padding: 10px;
+      text-decoration: none;
+      color: #333;
+      border-bottom: 1px solid #eee;
+    }
+    .menu a:last-child {
+      border-bottom: none;
+    }
+    .search-box {
+      margin: 30px auto;
+      max-width: 400px;
       display: flex;
       justify-content: center;
-      padding: 1rem;
     }
-    .search-bar input {
-      width: 60%;
-      padding: 0.5rem;
+    .search-box input {
+      width: 100%;
+      padding: 10px;
       font-size: 1rem;
       border: 1px solid #ccc;
-      border-radius: 4px;
+      border-radius: 10px;
     }
     .novel-list {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1rem;
-      padding: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 20px;
     }
     .novel-card {
-      background: white;
-      padding: 1rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 15px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
       cursor: pointer;
-      transition: transform 0.2s;
+      transition: transform 0.2s ease;
     }
     .novel-card:hover {
-      transform: translateY(-5px);
-    }
-    .novel-title {
-      font-size: 1.2rem;
-      margin-bottom: 0.5rem;
+      transform: scale(1.02);
     }
   </style>
 </head>
 <body>
   <header>
-    <div class="logo">UNOVEDUE</div>
-    <div class="menu">☰</div>
+    <h1>UNOVEDUE</h1>
+    <button class="menu-button" onclick="toggleMenu()">☰</button>
+    <div class="menu" id="menu">
+      <a href="#">Daftar Novel</a>
+      <a href="#">Daftar Proyek</a>
+      <a href="#">Login</a>
+      <a href="#">Bookmark</a>
+      <a href="#">Genre</a>
+      <a href="#" id="profile-link" style="display: none;">Profil</a>
+      <a href="#" id="history-link" style="display: none;">Histori</a>
+    </div>
   </header>
-  <div class="search-bar">
-    <input type="text" placeholder="Cari novel atau proyek..." />
+
+  <div class="search-box">
+    <input type="text" placeholder="Cari novel..." />
   </div>
+
   <div class="novel-list">
     <div class="novel-card" onclick="location.href='novel1.html'">
-      <div class="novel-title">Judul Novel Pertama</div>
-      <div>Deskripsi singkat novel 1...</div>
+      <h3>Novel 1</h3>
+      <p>Deskripsi singkat novel pertama.</p>
     </div>
     <div class="novel-card" onclick="location.href='novel2.html'">
-      <div class="novel-title">Judul Novel Kedua</div>
-      <div>Deskripsi singkat novel 2...</div>
+      <h3>Novel 2</h3>
+      <p>Deskripsi singkat novel kedua.</p>
     </div>
   </div>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('menu');
+      menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    // Simulasi login untuk menampilkan link profil dan histori
+    const userLoggedIn = true; // Ganti ke false jika tidak login
+    if (userLoggedIn) {
+      document.getElementById('profile-link').style.display = 'block';
+      document.getElementById('history-link').style.display = 'block';
+    }
+  </script>
 </body>
 </html>
