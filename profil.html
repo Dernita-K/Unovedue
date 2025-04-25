@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profil - UNOVEDUE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px;
+      background-color: #f4fdf4;
+    }
+    .profile-picture {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background-color: #b7e4c7;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+    .profile-picture img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .upload-btn {
+      margin-bottom: 10px;
+      display: flex;
+      gap: 10px;
+    }
+    .upload-btn input {
+      display: none;
+    }
+    .upload-label, .delete-label {
+      background-color: #b7e4c7;
+      padding: 8px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: #2d2d2d;
+      transition: background 0.3s;
+    }
+    .upload-label:hover, .delete-label:hover {
+      background-color: #95d5b2;
+    }
+    .username {
+      font-size: 1.5rem;
+      margin-bottom: 30px;
+      font-family: 'Playfair Display', serif;
+      color: #2d2d2d;
+    }
+    .profile-options {
+      width: 100%;
+      max-width: 400px;
+    }
+    .option {
+      background: #ffffff;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .option:hover {
+      background: #d8f3dc;
+    }
+    .option span {
+      font-size: 1.2rem;
+      font-family: 'Playfair Display', serif;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="profile-picture">
+    <img src="default-profile.png" alt="Profile Picture" id="profile-img">
+  </div>
+
+  <div class="upload-btn">
+    <label class="upload-label" for="upload-input">Upload Foto</label>
+    <label class="delete-label" id="delete-photo">Hapus Foto</label>
+    <input type="file" id="upload-input" accept="image/*">
+  </div>
+
+  <div class="username" id="username">
+    Nama Pengguna
+  </div>
+
+  <div class="profile-options">
+    <div class="option" onclick="location.href='history.html'">
+      <span>Histori</span>
+      <span>➔</span>
+    </div>
+    <div class="option" onclick="location.href='bookmark.html'">
+      <span>Bookmark</span>
+      <span>➔</span>
+    </div>
+  </div>
+
+  <script>
+    // Tampilkan nama pengguna
+    const username = localStorage.getItem('username') || 'Nama Pengguna';
+    document.getElementById('username').textContent = username;
+
+    // Cek apakah ada gambar profil yang sudah disimpan
+    const profileImg = localStorage.getItem('profileImage');
+    if (profileImg) {
+      document.getElementById('profile-img').src = profileImg;
+    }
+
+    // Upload dan simpan gambar baru
+    document.getElementById('upload-input').addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const imgData = e.target.result;
+          document.getElementById('profile-img').src = imgData;
+          localStorage.setItem('profileImage', imgData);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Hapus gambar profil
+    document.getElementById('delete-photo').addEventListener('click', function() {
+      localStorage.removeItem('profileImage');
+      document.getElementById('profile-img').src = 'default-profile.png';
+    });
+  </script>
+
+</body>
+</html>
