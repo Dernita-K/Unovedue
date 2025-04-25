@@ -43,6 +43,9 @@
       flex-direction: column;
       width: 200px;
     }
+    .menu.open {
+      display: flex;
+    }
     .menu a {
       padding: 10px;
       text-decoration: none;
@@ -89,8 +92,8 @@
     <h1>UNOVEDUE</h1>
     <button class="menu-button" onclick="toggleMenu()">☰</button>
     <div class="menu" id="menu">
-      <a href="#" id="profile-link" style="display: none;">Profil</a>
-      <a href="#" id="history-link" style="display: none;">Histori</a>
+      <a href="profil.html" id="profile-link" style="display: none;">Profil</a>
+      <a href="history.html" id="history-link" style="display: none;">Histori</a>
       <a href="novel.html">Daftar Novel</a>
       <a href="project.html">Daftar Proyek</a>
       <a href="#">Bookmark</a>
@@ -116,15 +119,18 @@
 
   <script>
     function toggleMenu() {
-      const menu = document.getElementById('menu');
-      menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+      document.getElementById("menu").classList.toggle("open");
     }
 
-    // Simulasi login untuk menampilkan link profil dan histori
-    const userLoggedIn = true; // Ganti ke false jika tidak login
-    if (userLoggedIn) {
-      document.getElementById('profile-link').style.display = 'block';
-      document.getElementById('history-link').style.display = 'block';
+    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+    const profileLink = document.getElementById("profile-link");
+    const historyLink = document.getElementById("history-link");
+    const loginLink = document.getElementById("login-link");
+
+    if (isLoggedIn) {
+      profileLink.style.display = "block";
+      historyLink.style.display = "block";
+      loginLink.style.display = "none";
     }
   </script>
 </body>
