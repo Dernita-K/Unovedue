@@ -56,6 +56,11 @@
       margin-top: 10px;
     }
 
+    .login-container .google-btn {
+      background-color: #4285F4;
+      margin-top: 10px;
+    }
+
     .login-container .bottom-links {
       margin-top: 20px;
       font-size: 0.9rem;
@@ -75,6 +80,7 @@
     <input type="email" id="email" placeholder="Email" required>
     <input type="password" id="password" placeholder="Password" required>
     <button id="loginBtn">Login</button>
+    <button class="google-btn" id="googleLoginBtn">Login dengan Google</button>
     <div class="bottom-links">
       Belum punya akun? <a href="register.html">Daftar</a>
     </div>
@@ -83,7 +89,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
-    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
     // Konfigurasi Firebase
     const firebaseConfig = {
@@ -100,8 +106,9 @@
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
     const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
 
-    // Event Listener tombol login
+    // Login dengan Email
     document.getElementById("loginBtn").addEventListener("click", () => {
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
@@ -109,13 +116,26 @@
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
-          console.log("Login berhasil:", user.email);
           localStorage.setItem("isLoggedIn", "true");
           localStorage.setItem("userEmail", user.email);
           window.location.href = "index.html";
         })
         .catch((error) => {
           alert("Login gagal: " + error.message);
+        });
+    });
+
+    // Login dengan Google
+    document.getElementById("googleLoginBtn").addEventListener("click", () => {
+      signInWithPopup(auth, provider)
+        .then((result) => {
+          const user = result.user;
+          localStorage.setItem("isLoggedIn", "true");
+          localStorage.setItem("userEmail", user.email);
+          window.location.href = "index.html";
+        })
+        .catch((error) => {
+          alert("Login Google gagal: " + error.message);
         });
     });
   </script>
