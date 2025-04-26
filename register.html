@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Login - UNOVEDUE</title>
+  <title>Daftar - UNOVEDUE</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
   <style>
     body {
@@ -15,7 +15,7 @@
       height: 100vh;
     }
 
-    .login-container {
+    .register-container {
       background: white;
       padding: 30px;
       border-radius: 20px;
@@ -24,17 +24,17 @@
       text-align: center;
     }
 
-    .login-container img {
+    .register-container img {
       width: 60px;
       margin-bottom: 20px;
     }
 
-    .login-container h2 {
+    .register-container h2 {
       margin-bottom: 20px;
       color: #2d2d2d;
     }
 
-    .login-container input {
+    .register-container input {
       width: 100%;
       padding: 10px;
       margin: 10px 0;
@@ -43,10 +43,10 @@
       font-size: 1rem;
     }
 
-    .login-container button {
+    .register-container button {
       width: 100%;
       padding: 10px;
-      background-color: #f9a825;
+      background-color: #43a047;
       border: none;
       border-radius: 10px;
       color: white;
@@ -56,12 +56,12 @@
       margin-top: 10px;
     }
 
-    .login-container .bottom-links {
+    .register-container .bottom-links {
       margin-top: 20px;
       font-size: 0.9rem;
     }
 
-    .login-container .bottom-links a {
+    .register-container .bottom-links a {
       color: #2d2d2d;
       text-decoration: none;
       font-weight: bold;
@@ -69,21 +69,21 @@
   </style>
 </head>
 <body>
-  <div class="login-container">
+  <div class="register-container">
     <img src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png" alt="Logo">
-    <h2>Login ke UNOVEDUE</h2>
+    <h2>Daftar ke UNOVEDUE</h2>
     <input type="email" id="email" placeholder="Email" required>
     <input type="password" id="password" placeholder="Password" required>
-    <button id="loginBtn">Login</button>
+    <button id="registerBtn">Daftar</button>
     <div class="bottom-links">
-      Belum punya akun? <a href="register.html">Daftar</a>
+      Sudah punya akun? <a href="login.html">Login</a>
     </div>
   </div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
-    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
     // Konfigurasi Firebase
     const firebaseConfig = {
@@ -101,21 +101,21 @@
     const analytics = getAnalytics(app);
     const auth = getAuth(app);
 
-    // Event Listener tombol login
-    document.getElementById("loginBtn").addEventListener("click", () => {
+    // Event Listener tombol daftar
+    document.getElementById("registerBtn").addEventListener("click", () => {
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
 
-      signInWithEmailAndPassword(auth, email, password)
+      createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
-          console.log("Login berhasil:", user.email);
+          console.log("Pendaftaran berhasil:", user.email);
           localStorage.setItem("isLoggedIn", "true");
           localStorage.setItem("userEmail", user.email);
           window.location.href = "index.html";
         })
         .catch((error) => {
-          alert("Login gagal: " + error.message);
+          alert("Pendaftaran gagal: " + error.message);
         });
     });
   </script>
