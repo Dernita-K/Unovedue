@@ -56,6 +56,21 @@
       margin-top: 10px;
     }
 
+    .google-button {
+      background-color: #ffffff;
+      color: #2d2d2d;
+      border: 1px solid #ccc;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .google-button img {
+      width: 20px;
+      margin-right: 10px;
+    }
+
     .register-container .bottom-links {
       margin-top: 20px;
       font-size: 0.9rem;
@@ -75,6 +90,9 @@
     <input type="email" id="email" placeholder="Email" required>
     <input type="password" id="password" placeholder="Password" required>
     <button id="registerBtn">Daftar</button>
+    <button id="googleRegisterBtn" class="google-button">
+      <img src="https://cdn-icons-png.flaticon.com/512/281/281764.png" alt="Google"> Daftar dengan Google
+    </button>
     <div class="bottom-links">
       Sudah punya akun? <a href="login.html">Login</a>
     </div>
@@ -82,7 +100,7 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyA9PAgPpaFfa0jbMqOrYYs1T_MmhjZbjPw",
@@ -96,6 +114,7 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
 
     document.getElementById("registerBtn").addEventListener("click", () => {
       const email = document.getElementById("email").value;
@@ -110,6 +129,19 @@
         })
         .catch((error) => {
           alert("Gagal mendaftar: " + error.message);
+        });
+    });
+
+    document.getElementById("googleRegisterBtn").addEventListener("click", () => {
+      signInWithPopup(auth, provider)
+        .then((result) => {
+          const user = result.user;
+          localStorage.setItem("isLoggedIn", "true");
+          localStorage.setItem("userEmail", user.email);
+          window.location.href = "index.html";
+        })
+        .catch((error) => {
+          alert("Gagal daftar dengan Google: " + error.message);
         });
     });
   </script>
