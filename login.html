@@ -74,28 +74,50 @@
     <h2>Login ke UNOVEDUE</h2>
     <input type="email" id="email" placeholder="Email" required>
     <input type="password" id="password" placeholder="Password" required>
-    <button onclick="login()">Login</button>
+    <button id="loginBtn">Login</button>
     <div class="bottom-links">
-      Belum punya akun? <a href="#">Daftar</a>
+      Belum punya akun? <a href="register.html">Daftar</a>
     </div>
   </div>
 
-  <script>
-    function login() {
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+
+    // Konfigurasi Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyA9PAgPpaFfa0jbMqOrYYs1T_MmhjZbjPw",
+      authDomain: "unovedue.firebaseapp.com",
+      projectId: "unovedue",
+      storageBucket: "unovedue.firebasestorage.app",
+      messagingSenderId: "81860746223",
+      appId: "1:81860746223:web:474833a1520732aa94741a",
+      measurementId: "G-2SS6L8ZZXD"
+    };
+
+    // Inisialisasi Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth(app);
+
+    // Event Listener tombol login
+    document.getElementById("loginBtn").addEventListener("click", () => {
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
 
-      // Simulasi login
-      if (email && password) {
-        localStorage.setItem("isLoggedIn", "true");
-        localStorage.setItem("userEmail", email);
-
-        // Redirect ke halaman utama setelah login
-        window.location.href = "index.html";
-      } else {
-        alert("Mohon isi email dan password.");
-      }
-    }
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          console.log("Login berhasil:", user.email);
+          localStorage.setItem("isLoggedIn", "true");
+          localStorage.setItem("userEmail", user.email);
+          window.location.href = "index.html";
+        })
+        .catch((error) => {
+          alert("Login gagal: " + error.message);
+        });
+    });
   </script>
 </body>
 </html>
