@@ -46,7 +46,7 @@
     .register-container button {
       width: 100%;
       padding: 10px;
-      background-color: #43a047;
+      background-color: #388e3c;
       border: none;
       border-radius: 10px;
       color: white;
@@ -71,7 +71,7 @@
 <body>
   <div class="register-container">
     <img src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png" alt="Logo">
-    <h2>Daftar ke UNOVEDUE</h2>
+    <h2>Daftar Akun UNOVEDUE</h2>
     <input type="email" id="email" placeholder="Email" required>
     <input type="password" id="password" placeholder="Password" required>
     <button id="registerBtn">Daftar</button>
@@ -82,10 +82,8 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
     import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
-    // Konfigurasi Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyA9PAgPpaFfa0jbMqOrYYs1T_MmhjZbjPw",
       authDomain: "unovedue.firebaseapp.com",
@@ -96,12 +94,9 @@
       measurementId: "G-2SS6L8ZZXD"
     };
 
-    // Inisialisasi Firebase
     const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
     const auth = getAuth(app);
 
-    // Event Listener tombol daftar
     document.getElementById("registerBtn").addEventListener("click", () => {
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
@@ -109,13 +104,12 @@
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
-          console.log("Pendaftaran berhasil:", user.email);
           localStorage.setItem("isLoggedIn", "true");
           localStorage.setItem("userEmail", user.email);
           window.location.href = "index.html";
         })
         .catch((error) => {
-          alert("Pendaftaran gagal: " + error.message);
+          alert("Gagal mendaftar: " + error.message);
         });
     });
   </script>
